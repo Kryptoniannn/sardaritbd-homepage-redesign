@@ -122,3 +122,107 @@ export const CONTACT = {
   ig: "https://www.instagram.com/sardaritbd/",
   li: "https://www.linkedin.com/company/sardarit212021/",
 };
+
+export const CAPABILITIES = [
+  {
+    n: "01",
+    title: "Web Design & Development",
+    note: "WordPress, Webflow & WIX builds shipped end to end",
+    tag: "Build",
+    img: IMG.office1,
+  },
+  {
+    n: "02",
+    title: "Graphics Design",
+    note: "Branding systems, identity & memorable visual language",
+    tag: "Brand",
+    img: IMG.proc3,
+  },
+  {
+    n: "03",
+    title: "Digital Marketing",
+    note: "Cohesive, measurable online growth strategy",
+    tag: "Growth",
+    img: IMG.learn2,
+  },
+  {
+    n: "04",
+    title: "Programming",
+    note: "Custom code aligned to your business goals",
+    tag: "Code",
+    img: IMG.proc2,
+  },
+  {
+    n: "05",
+    title: "UI/UX Design",
+    note: "Interfaces designed around real user behaviour",
+    tag: "Design",
+    img: IMG.office3,
+  },
+  {
+    n: "06",
+    title: "eCommerce Development",
+    note: "Storefronts, course platforms & delivery flows",
+    tag: "Commerce",
+    img: IMG.proc1,
+  },
+];
+
+export const WHY_US = [
+  {
+    n: "01",
+    kicker: "Quality Control",
+    title: "Carefully vetted freelancers",
+    text: "We carefully vet freelancers to ensure you're working with the best in the industry, delivering high-quality results every time.",
+    chips: ["Vetted Talent", "Reviewed Work", "Senior Oversight"],
+    stats: [
+      { value: "4.9★", label: "Average Review" },
+      { value: "100%", label: "Client Pleasure" },
+    ],
+    cta: "Hire vetted talent",
+    accent: "#ffd000",
+    tint: "rgba(255,208,0,0.16)",
+  },
+  {
+    n: "02",
+    kicker: "Our Standard",
+    title: "Unwavering excellence",
+    text: "Our commitment to excellence is unwavering. Your satisfaction is our top priority as we work and thrive together, project after project.",
+    chips: ["Discovery", "Planning", "Execute", "Deliver"],
+    stats: [
+      { value: "4", label: "Stage Process" },
+      { value: "2K+", label: "Projects Completed" },
+    ],
+    cta: "See how we work",
+    accent: "#22d3ee",
+    tint: "rgba(34,211,238,0.16)",
+  },
+  {
+    n: "03",
+    kicker: "Reach",
+    title: "1.5k+ clients worldwide",
+    text: "Over 1.5k+ clients all over the world trust Sardar IT — delivered across Fiverr, Upwork, Freelancer and PeoplePerHour.",
+    chips: ["Fiverr", "Upwork", "Freelancer", "PeoplePerHour"],
+    stats: [
+      { value: "5K+", label: "Clients Served" },
+      { value: "5M+", label: "Revenue / year" },
+    ],
+    cta: "Work with us",
+    accent: "#ff2e88",
+    tint: "rgba(255,46,136,0.16)",
+  },
+  {
+    n: "04",
+    kicker: "The Team",
+    title: "A full in-house studio",
+    text: "Web Developers, Graphics Designers, Digital marketers and Code Poets — one accountable team instead of scattered vendors.",
+    chips: ["Developers", "Designers", "Marketers", "Code Poets"],
+    stats: [
+      { value: "45+", label: "Employees" },
+      { value: "30+", label: "Family Members" },
+    ],
+    cta: "Meet the team",
+    accent: "#00e5a0",
+    tint: "rgba(0,229,160,0.16)",
+  },
+];

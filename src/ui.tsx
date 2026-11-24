@@ -21,7 +21,7 @@ export function goTo(href: string) {
   const el = document.querySelector(href);
   if (!el) return;
   if (lenisRef.current) {
-    lenisRef.current.scrollTo(el as HTMLElement, { offset: -24, duration: 1.5 });
+    lenisRef.current.scrollTo(el as HTMLElement, { offset: -92, duration: 1.5 });
   } else {
     el.scrollIntoView({ behavior: "smooth" });
   }
@@ -137,7 +137,10 @@ export function Cursor() {
     <>
       <div ref={rippleBoxRef} />
       <div ref={dotRef} className="pointer-events-none fixed left-0 top-0 z-[201] will-change-transform">
-        <div className="h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ffd000] shadow-[0_0_14px_#ffd000]" />
+        <div
+          className="h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ffd000] shadow-[0_0_14px_#ffd000] transition-opacity duration-200"
+          style={{ opacity: label ? 0 : 1 }}
+        />
       </div>
       <div ref={ringRef} className="pointer-events-none fixed left-0 top-0 z-[200] will-change-transform">
         <div
@@ -660,6 +663,74 @@ export function Counter({ to, dec = 0, suffix = "" }: { to: number; dec?: number
   );
 }
 
+/* ---------------------------------- Mechanical Odometer Digit Reels */
+export function Odometer({ value, dec = 0, suffix = "" }: { value: number; dec?: number; suffix?: string }) {
+  const rootRef = useRef<HTMLSpanElement>(null);
+  const text = value.toFixed(dec);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const strips = Array.from(root.querySelectorAll<HTMLElement>(".odo-strip"));
+    if (!strips.length) return;
+
+    const settle = () => {
+      strips.forEach((strip) => {
+        const digit = Number(strip.dataset.digit ?? 0);
+        gsap.set(strip, { yPercent: -digit * 5 });
+      });
+    };
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      settle();
+      return;
+    }
+
+    const ctx = gsap.context(() => {
+      strips.forEach((strip, i) => {
+        const digit = Number(strip.dataset.digit ?? 0);
+        gsap.fromTo(
+          strip,
+          { yPercent: -(digit + 10) * 5 },
+          {
+            yPercent: -digit * 5,
+            duration: 1.7 + i * 0.16,
+            ease: "expo.out",
+            scrollTrigger: { trigger: root, start: "top 88%", once: true },
+          }
+        );
+      });
+    }, root);
+
+    return () => ctx.revert();
+  }, [value, dec]);
+
+  return (
+    <span ref={rootRef} aria-label={`${text}${suffix}`} className="inline-flex items-end tabular-nums">
+      {text.split("").map((ch, i) =>
+        /\d/.test(ch) ? (
+          <span key={i} className="odo-col" aria-hidden="true">
+            <span className="odo-strip" data-digit={ch}>
+              {Array.from({ length: 20 }, (_, k) => (
+                <span key={k} className="odo-item">
+                  {k % 10}
+                </span>
+              ))}
+            </span>
+          </span>
+        ) : (
+          <span key={i} className="inline-block" aria-hidden="true">
+            {ch}
+          </span>
+        )
+      )}
+      <span className="text-gradient" aria-hidden="true">
+        {suffix}
+      </span>
+    </span>
+  );
+}
+
 /* ------------------------ 3D Perspective Tilt + Specular Glare Sheen */
 export function Tilt({
   children,
@@ -744,8 +815,8 @@ export function SectionTag({ children, className }: { children: ReactNode; class
     <Reveal y={16} className={className}>
       <span className="glass inline-flex items-center gap-2.5 rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-white/85">
         <span className="relative flex h-2 w-2">
-          <span className="pulse-ring absolute inset-0 rounded-full bg-[#ffd000]" />
-          <span className="relative h-2 w-2 rounded-full bg-[#ffd000]" />
+          <span className="pulse-ring absolute inset-0 rounded-full" style={{ background: "var(--accent)" }} />
+          <span className="relative h-2 w-2 rounded-full" style={{ background: "var(--accent)" }} />
         </span>
         {children}
       </span>

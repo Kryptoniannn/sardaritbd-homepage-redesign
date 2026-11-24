@@ -1,9 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap, safeRefresh } from "../gsapSetup";
+import { useSyncExternalStore } from "react";
 import { WORKS } from "../data";
 import { ArrowIcon, Button, Magnetic, SectionTag, SplitWords } from "../ui";
 
+const subscribeDesktop = (cb: () => void) => {
+  const mq = window.matchMedia("(min-width: 1024px)");
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+};
+
 export default function Works() {
+  const isDesktop = useSyncExternalStore(
+    subscribeDesktop,
+    () => window.matchMedia("(min-width: 1024px)").matches,
+    () => true
+  );
   const secRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const bgWordRef = useRef<HTMLDivElement>(null);
@@ -14,7 +26,7 @@ export default function Works() {
   useEffect(() => {
     const sec = secRef.current;
     const track = trackRef.current;
-    if (!sec || !track) return;
+    if (!sec || !track || !isDesktop) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const ctx = gsap.context(() => {
@@ -95,14 +107,37 @@ export default function Works() {
     }, sec);
 
     return () => ctx.revert();
-  }, []);
+  }, [isDesktop]);
+
+  // Touch devices get a native snap scroller instead of a pinned track
+  useEffect(() => {
+    if (isDesktop) return;
+    const track = trackRef.current;
+    if (!track) return;
+    const onScroll = () => {
+      const max = Math.max(1, track.scrollWidth - track.clientWidth);
+      const p = track.scrollLeft / max;
+      if (barRef.current) barRef.current.style.transform = `scaleX(${p})`;
+      if (idxRef.current) {
+        const cur = Math.min(WORKS.length, Math.max(1, Math.ceil(p * WORKS.length) || 1));
+        idxRef.current.textContent = `0${cur}`;
+      }
+    };
+    onScroll();
+    track.addEventListener("scroll", onScroll, { passive: true });
+    return () => track.removeEventListener("scroll", onScroll);
+  }, [isDesktop]);
 
   return (
     <>
       <section id="works" ref={secRef} className="relative overflow-hidden bg-[#060815]">
         <div className="grid-bg pointer-events-none absolute inset-0 opacity-55" />
 
-        <div className="relative flex h-screen flex-col justify-center overflow-hidden">
+        <div
+          className={`relative flex flex-col justify-center overflow-hidden ${
+            isDesktop ? "h-screen" : "py-20"
+          }`}
+        >
           {/* Giant Scrubbed Background Watermark */}
           <div
             ref={bgWordRef}
@@ -115,10 +150,14 @@ export default function Works() {
           {/* Horizontal Cinema Track */}
           <div
             ref={trackRef}
-            className="relative z-10 flex w-max items-center gap-7 px-6 will-change-transform md:gap-12 md:px-16"
+            className={`rail-scroll relative z-10 flex items-center gap-7 px-6 md:gap-12 md:px-16 ${
+              isDesktop
+                ? "w-max will-change-transform"
+                : "snap-x snap-mandatory overflow-x-auto pb-8"
+            }`}
           >
             {/* Intro Slide */}
-            <div className="w-[84vw] shrink-0 md:w-[34vw] md:max-w-[480px]">
+            <div className="w-[84vw] shrink-0 snap-center md:w-[34vw] md:max-w-[480px]">
               <SectionTag className="mb-7">Recent Works</SectionTag>
               <h2 className="font-display text-4xl font-extrabold leading-[1.04] tracking-tight md:text-6xl">
                 <SplitWords text="Our proud [projects] make us excel" />
@@ -139,7 +178,7 @@ export default function Works() {
                 key={i}
                 data-cursor="INSPECT"
                 onClick={() => setSelected(w)}
-                className="work-card group relative w-[82vw] shrink-0 cursor-pointer will-change-transform md:w-[40vw] md:max-w-[650px]"
+                className="work-card group relative w-[82vw] shrink-0 cursor-pointer snap-center will-change-transform md:w-[40vw] md:max-w-[650px]"
               >
                 <div className="spot relative aspect-[4/3] overflow-hidden rounded-[2rem] p-2 shadow-[0_30px_90px_rgba(0,0,0,0.7)]">
                   <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-[#0b1026]">
@@ -176,7 +215,7 @@ export default function Works() {
             ))}
 
             {/* End CTA Slide */}
-            <div className="flex w-[72vw] shrink-0 flex-col items-start justify-center pr-12 md:w-[28vw]">
+            <div className="flex w-[72vw] shrink-0 snap-center flex-col items-start justify-center pr-12 md:w-[28vw]">
               <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#ffd000]">Next Project</p>
               <h3 className="font-display mt-3 text-3xl font-extrabold md:text-5xl">
                 Ready to build yours with Sardar IT?
@@ -192,7 +231,11 @@ export default function Works() {
           </div>
 
           {/* Bottom Telemetry Rail */}
-          <div className="absolute bottom-8 left-6 right-6 z-20 flex items-center gap-6 md:left-16 md:right-16">
+          <div
+            className={`z-20 flex items-center gap-6 ${
+              isDesktop ? "absolute bottom-8 left-6 right-6 md:left-16 md:right-16" : "mt-2 px-6"
+            }`}
+          >
             <div className="font-display flex items-baseline gap-1 text-sm font-bold tabular-nums">
               <span ref={idxRef} className="text-xl text-[#ffd000]">
                 01

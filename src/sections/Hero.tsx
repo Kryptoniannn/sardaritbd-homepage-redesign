@@ -113,10 +113,10 @@ function ConstellationCanvas() {
 }
 
 const CHIPS = [
-  { t: "Web Developers", pos: "-left-4 top-[10%] md:-left-8", z: 70 },
-  { t: "Graphics Designers", pos: "-right-3 top-[24%] md:-right-7", z: 85 },
-  { t: "Digital Marketers", pos: "-left-5 bottom-[28%] md:-left-10", z: 65 },
-  { t: "Code Poets", pos: "right-4 -bottom-4", z: 90 },
+  { t: "Web Developers", pos: "-left-4 top-[34%] lg:-left-11", z: 70 },
+  { t: "Graphics Designers", pos: "-right-3 top-[22%] lg:-right-9", z: 85 },
+  { t: "Digital Marketers", pos: "-left-5 bottom-[27%] lg:-left-12", z: 65 },
+  { t: "Code Poets", pos: "left-10 -bottom-7", z: 90 },
 ];
 
 export default function Hero({ ready }: { ready: boolean }) {
@@ -234,7 +234,7 @@ export default function Hero({ ready }: { ready: boolean }) {
       <ConstellationCanvas />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#04050c] to-transparent" />
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-16 px-6 lg:grid-cols-[1.08fr_0.92fr]">
+      <div className="relative mx-auto grid max-w-7xl items-center gap-16 px-6 lg:grid-cols-[1.08fr_0.92fr] 2xl:pl-24">
         {/* Left Copy */}
         <div ref={leftRef} className="relative">
           {/* Sardar IT original floating arrow accent */}
@@ -332,7 +332,7 @@ export default function Hero({ ready }: { ready: boolean }) {
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#04050c]/85 via-[#04050c]/15 to-[#1946e0]/20" />
 
                 {/* Top live status pill */}
-                <div className="glass absolute left-4 top-4 flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-white/90">
+                <div className="glass absolute right-4 top-4 flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-white/90">
                   <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
                   Live Studio · Mirpur HQ
                 </div>
@@ -357,8 +357,8 @@ export default function Hero({ ready }: { ready: boolean }) {
 
             {/* Secondary Floating Picture-in-Picture Plane */}
             <div
-              style={{ transform: "translateZ(55px)" }}
-              className="glass-bright absolute -left-6 -top-7 hidden w-40 overflow-hidden rounded-2xl p-1.5 shadow-2xl sm:block md:-left-10"
+              style={{ transform: "translateZ(95px)" }}
+              className="glass-bright absolute -left-6 -top-8 z-30 hidden w-40 overflow-hidden rounded-2xl p-1.5 shadow-2xl sm:block md:-left-10"
             >
               <img
                 src={IMG.office3}

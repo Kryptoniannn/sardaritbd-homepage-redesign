@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "../gsapSetup";
 import { STATS } from "../data";
-import { Counter, SectionTag, SplitWords, Tilt, spotMove } from "../ui";
+import { Odometer, SectionTag, SplitWords, Tilt, spotMove } from "../ui";
 
 const PCTS = [0.92, 0.88, 0.98, 1.0, 0.85, 0.94];
 
@@ -122,7 +122,7 @@ export default function Stats() {
 
                   <div className="relative z-10 mt-4">
                     <div className="font-display text-6xl font-extrabold leading-none tracking-tight md:text-7xl">
-                      <Counter to={s.to} dec={s.dec} suffix={s.suffix} />
+                      <Odometer value={s.to} dec={s.dec} suffix={s.suffix} />
                     </div>
                     <div className="mt-6 flex items-center gap-3">
                       <span className="h-[2px] w-10 bg-[#ffd000] transition-all duration-500 group-hover:w-20" />

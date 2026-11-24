@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { shaderAccent } from "./theme";
 
 const VERT = `
 attribute vec2 a_pos;
@@ -14,6 +15,7 @@ uniform float u_time;
 uniform vec2 u_mouse;
 uniform float u_vel;
 uniform float u_scroll;
+uniform vec3 u_accent;
 
 float hash(vec2 p) {
   return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
@@ -61,15 +63,14 @@ void main() {
   );
   float f = fbm(p * 1.8 + 2.2 * r);
 
-  vec3 abyss = vec3(0.016, 0.020, 0.048);
+  vec3 abyss = vec3(0.014, 0.018, 0.045);
   vec3 cobalt = vec3(0.098, 0.275, 0.878);
-  vec3 electric = vec3(0.26, 0.46, 1.0);
   vec3 gold = vec3(1.0, 0.816, 0.0);
 
-  vec3 col = mix(abyss, cobalt * 0.55, clamp(f * f * 2.1, 0.0, 1.0));
-  col = mix(col, electric * 0.68, clamp(length(q) * 0.55, 0.0, 1.0));
-  float goldMask = smoothstep(0.62, 0.96, r.x * f * 1.65) + ripple * 0.55;
-  col = mix(col, gold * 0.72, clamp(goldMask * 0.42, 0.0, 0.55));
+  vec3 col = mix(abyss, cobalt * 0.5, clamp(f * f * 2.1, 0.0, 1.0));
+  col = mix(col, u_accent * 0.72, clamp(length(q) * 0.58, 0.0, 1.0));
+  float hotMask = smoothstep(0.62, 0.96, r.x * f * 1.65) + ripple * 0.55;
+  col = mix(col, mix(gold, u_accent, 0.45) * 0.8, clamp(hotMask * 0.4, 0.0, 0.55));
 
   float vignette = smoothstep(1.28, 0.2, length((uv - 0.5) * vec2(1.15, 1.05)));
   col *= 0.42 + 0.58 * vignette;
@@ -131,6 +132,7 @@ export default function ShaderBg() {
     const uMouse = gl.getUniformLocation(prog, "u_mouse");
     const uVel = gl.getUniformLocation(prog, "u_vel");
     const uScroll = gl.getUniformLocation(prog, "u_scroll");
+    const uAccent = gl.getUniformLocation(prog, "u_accent");
 
     let w = 1;
     let h = 1;
@@ -146,6 +148,7 @@ export default function ShaderBg() {
 
     const target = { x: 0.65, y: 0.55 };
     const mouse = { x: 0.65, y: 0.55 };
+    const accent = { r: shaderAccent.r, g: shaderAccent.g, b: shaderAccent.b };
     let vel = 0;
 
     const onMove = (e: MouseEvent) => {
@@ -173,6 +176,9 @@ export default function ShaderBg() {
       if (!lost && gl && !document.hidden) {
         mouse.x += (target.x - mouse.x) * 0.06;
         mouse.y += (target.y - mouse.y) * 0.06;
+        accent.r += (shaderAccent.r - accent.r) * 0.045;
+        accent.g += (shaderAccent.g - accent.g) * 0.045;
+        accent.b += (shaderAccent.b - accent.b) * 0.045;
         vel *= 0.93;
         const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
         const sp = window.scrollY / maxScroll;
@@ -182,6 +188,7 @@ export default function ShaderBg() {
         gl.uniform2f(uMouse, mouse.x, mouse.y);
         gl.uniform1f(uVel, vel);
         gl.uniform1f(uScroll, sp);
+        gl.uniform3f(uAccent, accent.r, accent.g, accent.b);
         gl.drawArrays(gl.TRIANGLES, 0, 6);
       }
       raf = requestAnimationFrame(render);

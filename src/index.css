@@ -16,6 +16,14 @@
   inherits: false;
 }
 
+:root {
+  --accent: rgb(61 107 255);
+  --accent-soft: rgb(61 107 255 / 0.35);
+  --ink: #04050c;
+  --surface: #090d20;
+  --gold: #ffd000;
+}
+
 html {
   background: var(--color-ink);
   scroll-behavior: auto;
@@ -55,7 +63,27 @@ body {
   background: #04050c;
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #1946e0, #ffd000);
+  background: linear-gradient(180deg, var(--accent), #ffd000);
+  border-radius: 999px;
+  border: 1px solid rgba(4, 5, 12, 0.9);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ffd000, var(--accent));
+}
+
+.rail-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) rgba(255, 255, 255, 0.07);
+}
+.rail-scroll::-webkit-scrollbar {
+  height: 5px;
+}
+.rail-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 999px;
+}
+.rail-scroll::-webkit-scrollbar-thumb {
+  background: var(--accent);
   border-radius: 999px;
 }
 
@@ -158,7 +186,7 @@ body {
   inset: 0;
   background: radial-gradient(
     460px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(61, 107, 255, 0.3),
+    var(--accent-soft),
     rgba(255, 208, 0, 0.07) 38%,
     transparent 68%
   );
@@ -178,7 +206,7 @@ body {
   background: conic-gradient(
     from var(--beam-angle),
     transparent 0deg,
-    rgba(61, 107, 255, 0.9) 70deg,
+    var(--accent) 70deg,
     rgba(255, 208, 0, 0.95) 130deg,
     transparent 200deg
   );
@@ -239,4 +267,63 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+
+/* ---------------------------------------- Text mask zoom portal */
+.mask-word {
+  background-image: var(--mask-img);
+  background-size: cover;
+  background-position: center 42%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  will-change: transform;
+}
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .mask-word {
+    color: #ffd000;
+    background-image: none;
+  }
+}
+
+/* ---------------------------------------- Odometer digit reels */
+.odo-col {
+  display: inline-block;
+  height: 1.06em;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.odo-strip {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+}
+.odo-item {
+  height: 1.06em;
+  line-height: 1.06em;
+  display: block;
+}
+
+/* ---------------------------------------- Stacked sticky cards */
+.stack-card {
+  transform-origin: 50% 0%;
+  will-change: transform, opacity;
+}
+
+/* ---------------------------------------- Hover reveal index rows */
+.cap-row-title {
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s ease;
+}
+.cap-row:hover .cap-row-title {
+  transform: translateX(1.6rem);
+  color: var(--accent);
+}
+.cap-row-line {
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cap-row:hover .cap-row-line {
+  transform: scaleX(1);
 }
