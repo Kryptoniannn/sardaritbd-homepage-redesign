@@ -18,8 +18,8 @@ export default function Learning() {
             </h2>
           </div>
           <Reveal>
-            <div className="flex h-24 w-24 items-center justify-center rounded-full bg-white p-4 shadow-[0_0_50px_rgba(255,208,0,0.35)]">
-              <img src={IMG.shape} alt="" referrerPolicy="no-referrer" className="spin-rev h-full w-full object-contain" />
+            <div className="glass-bright flex h-24 w-24 items-center justify-center rounded-full p-4 shadow-[0_0_50px_rgba(61,107,255,0.35)]">
+              <img src={IMG.shape} alt="" referrerPolicy="no-referrer" className="spin-rev h-full w-full object-contain brightness-125" />
             </div>
           </Reveal>
         </div>

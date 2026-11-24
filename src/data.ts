@@ -2,6 +2,7 @@ const U = "https://sardaritbd.com/wp-content/uploads";
 
 export const IMG = {
   logo: `${U}/2023/10/Sardarit-logo-updated-1.png`,
+  logoWhite: `${U}/2023/10/w1.png`,
   favicon: `${U}/2025/08/cropped-logo-1.3-1-192x192.png`,
   ring: `${U}/2024/04/site-rotet.png`,
   arrow: `${U}/2024/04/arro-1.png`,

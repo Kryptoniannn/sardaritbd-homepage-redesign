@@ -47,7 +47,12 @@ export function ContactSection() {
         <SectionTag className="mb-7">Let&apos;s Talk</SectionTag>
         <h2 className="font-display text-5xl font-extrabold leading-[1.01] tracking-tight sm:text-7xl lg:text-[7rem]">
           <SplitWords text="Request A Free" chars />
-          <SplitWords text="[Consultation]" chars delay={0.18} />
+          <SplitWords
+            text="[Consultation]"
+            highlightClassName="font-serif-ed italic font-normal text-[1.08em]"
+            chars
+            delay={0.18}
+          />
         </h2>
 
         <div className="mt-18 grid gap-12 lg:grid-cols-[1.12fr_0.88fr] lg:gap-20">
@@ -205,7 +210,7 @@ function ProximityWordmark() {
     gsap.to(row.querySelectorAll(".wm-ch"), {
       y: 0,
       scale: 1,
-      color: "transparent",
+      color: "#03040a",
       duration: 0.7,
       ease: "elastic.out(1, 0.45)",
       overwrite: "auto",
@@ -223,7 +228,7 @@ function ProximityWordmark() {
       {chars.map((ch, idx) => (
         <span
           key={idx}
-          className="wm-ch inline-block text-outline transition-[text-shadow] duration-300 will-change-transform"
+          className="wm-ch inline-block text-outline-solid transition-[text-shadow] duration-300 will-change-transform"
         >
           {ch === " " ? "\u00A0" : ch}
         </span>
@@ -243,8 +248,8 @@ export function Footer() {
 
       <div className="relative mx-auto grid max-w-7xl gap-14 px-6 py-16 md:grid-cols-2 lg:grid-cols-[1.3fr_0.7fr_1.2fr_1fr]">
         <div>
-          <div className="inline-block rounded-2xl bg-white px-5 py-3 shadow-[0_0_50px_rgba(25,70,224,0.45)]">
-            <img src={IMG.logo} alt="Sardar IT" referrerPolicy="no-referrer" className="h-9 w-auto" />
+          <div className="glass-bright inline-block rounded-2xl px-5 py-3 shadow-[0_0_50px_rgba(25,70,224,0.45)]">
+            <img src={IMG.logoWhite} alt="Sardar IT" referrerPolicy="no-referrer" className="h-9 w-auto" />
           </div>
           <p className="mt-6 max-w-xs text-sm leading-relaxed text-white/65">
             We work with a passion for taking challenges and creating new ones in the Freelancing sector.

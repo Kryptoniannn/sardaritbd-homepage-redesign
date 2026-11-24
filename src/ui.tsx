@@ -192,8 +192,8 @@ export function ScrollProgress() {
     <>
       <div
         ref={barRef}
-        style={{ transform: "scaleX(0)" }}
-        className="fixed left-0 right-0 top-0 z-[95] h-[3px] origin-left bg-gradient-to-r from-[#1946e0] via-[#6f93ff] to-[#ffd000] shadow-[0_0_16px_rgba(255,208,0,0.65)]"
+        style={{ transform: "scaleX(0)", background: "linear-gradient(90deg, rgba(61,107,255,0.25), var(--accent) 70%, rgba(255,255,255,0.85))" }}
+        className="fixed left-0 right-0 top-0 z-[95] h-[2px] origin-left"
       />
       <button
         type="button"
@@ -409,6 +409,7 @@ export function ScrambleText({ text, className }: { text: string; className?: st
 export function SplitWords({
   text,
   className,
+  highlightClassName,
   delay = 0,
   active,
   stagger = 0.045,
@@ -416,6 +417,7 @@ export function SplitWords({
 }: {
   text: string;
   className?: string;
+  highlightClassName?: string;
   delay?: number;
   active?: boolean;
   stagger?: number;
@@ -458,9 +460,9 @@ export function SplitWords({
               yPercent: 0,
               rotationX: 0,
               opacity: 1,
-              duration: 1.15,
+              duration: 0.85,
               delay,
-              stagger: chars ? 0.018 : stagger,
+              stagger: chars ? 0.01 : stagger,
               ease: "expo.out",
               overwrite: "auto",
             }
@@ -470,19 +472,19 @@ export function SplitWords({
         gsap.fromTo(
           items,
           {
-            yPercent: 120,
-            rotationX: -72,
+            yPercent: 115,
+            rotationX: -55,
             opacity: 0,
             transformPerspective: 900,
-            transformOrigin: "50% 100% -18px",
+            transformOrigin: "50% 100% -14px",
           },
           {
             yPercent: 0,
             rotationX: 0,
             opacity: 1,
-            duration: 1.1,
+            duration: 0.9,
             delay,
-            stagger: chars ? 0.016 : stagger,
+            stagger: chars ? 0.01 : stagger,
             ease: "expo.out",
             scrollTrigger: {
               trigger: root,
@@ -506,21 +508,33 @@ export function SplitWords({
           return words.map((w, wi) => (
             <span
               key={`${si}-${wi}`}
-              className="inline-block overflow-hidden align-bottom pb-[0.15em] -mb-[0.15em] pr-[0.04em]"
+              className="inline-block overflow-hidden align-bottom py-[0.24em] -my-[0.24em] px-[0.08em] -mx-[0.04em]"
             >
               {chars ? (
                 <span className="inline-block">
                   {w.split("").map((ch, ci) => (
                     <span
                       key={ci}
-                      className={cn("sw-unit inline-block will-change-transform", hl && "text-gradient")}
+                      className={cn(
+                        "sw-unit inline-block will-change-transform",
+                        hl && "text-gradient",
+                        hl && highlightClassName
+                      )}
                     >
                       {ch}
                     </span>
                   ))}
                 </span>
               ) : (
-                <span className={cn("sw-unit inline-block will-change-transform", hl && "text-gradient")}>{w}</span>
+                <span
+                  className={cn(
+                    "sw-unit inline-block will-change-transform",
+                    hl && "text-gradient",
+                    hl && highlightClassName
+                  )}
+                >
+                  {w}
+                </span>
               )}
               {"\u00A0"}
             </span>
@@ -971,7 +985,7 @@ export function Preloader({ onDone }: { onDone: () => void }) {
     };
 
     const start = Date.now();
-    const totalMs = 2100;
+    const totalMs = 1550;
     const iv = window.setInterval(() => {
       const elapsed = Date.now() - start;
       const p = Math.min(1, elapsed / totalMs);
@@ -984,7 +998,7 @@ export function Preloader({ onDone }: { onDone: () => void }) {
       }
     }, 32);
 
-    const failsafe = window.setTimeout(finish, 2900);
+    const failsafe = window.setTimeout(finish, 2300);
 
     return () => {
       window.clearInterval(iv);
@@ -1027,9 +1041,9 @@ export function Preloader({ onDone }: { onDone: () => void }) {
           Skip Intro ↗
         </button>
 
-        {/* Sardar IT Official Logo Emblem */}
-        <div className="relative overflow-hidden rounded-3xl bg-white px-8 py-5 shadow-[0_0_130px_rgba(25,70,224,0.7)]">
-          <img src={IMG.logo} alt="Sardar IT" referrerPolicy="no-referrer" className="h-12 w-auto md:h-16" />
+        {/* Sardar IT Official White Logo Emblem */}
+        <div className="glass-bright relative overflow-hidden rounded-3xl px-9 py-6 shadow-[0_0_130px_rgba(25,70,224,0.7)]">
+          <img src={IMG.logoWhite} alt="Sardar IT" referrerPolicy="no-referrer" className="h-12 w-auto md:h-16" />
           <div
             style={{ transform: `translateX(${n * 3.2 - 120}%) skewX(-18deg)` }}
             className="pointer-events-none absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-transparent via-[#ffd000]/45 to-transparent"

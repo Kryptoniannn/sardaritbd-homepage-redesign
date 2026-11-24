@@ -5,7 +5,13 @@ import { ArrowIcon, Button, Magnetic, ScrambleText, goTo } from "../ui";
 
 const SPY_IDS = ["home", "about", "services", "works", "contact"];
 
-export default function Nav({ ready }: { ready: boolean }) {
+export default function Nav({
+  ready,
+  onOpenCmd,
+}: {
+  ready: boolean;
+  onOpenCmd: () => void;
+}) {
   const headerRef = useRef<HTMLElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
   const [scrolled, setScrolled] = useState(false);
@@ -13,7 +19,6 @@ export default function Nav({ ready }: { ready: boolean }) {
   const [active, setActive] = useState("#home");
   const [bdTime, setBdTime] = useState("");
 
-  // Live Dhaka GMT+6 clock
   useEffect(() => {
     const updateClock = () => {
       try {
@@ -33,7 +38,6 @@ export default function Nav({ ready }: { ready: boolean }) {
     return () => window.clearInterval(iv);
   }, []);
 
-  // Entrance + smart hide/reveal on scroll + scroll spy
   useEffect(() => {
     const hdr = headerRef.current;
     if (!hdr) return;
@@ -56,7 +60,6 @@ export default function Nav({ ready }: { ready: boolean }) {
       }
       lastY = y;
 
-      // Active section spy
       const mid = y + window.innerHeight * 0.35;
       for (let i = SPY_IDS.length - 1; i >= 0; i--) {
         const sec = document.getElementById(SPY_IDS[i]);
@@ -70,7 +73,6 @@ export default function Nav({ ready }: { ready: boolean }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, [ready, open]);
 
-  // Mobile fullscreen curtain animation
   useEffect(() => {
     const dr = drawerRef.current;
     if (!dr) return;
@@ -113,8 +115,8 @@ export default function Nav({ ready }: { ready: boolean }) {
         <nav
           className={`flex w-full max-w-7xl items-center justify-between rounded-full py-2 pl-2.5 pr-2.5 transition-all duration-500 ${
             scrolled
-              ? "glass shadow-[0_16px_60px_rgba(0,0,0,0.65)]"
-              : "border border-white/10 bg-[#04050c]/45 backdrop-blur-md"
+              ? "glass shadow-[0_20px_70px_rgba(0,0,0,0.72)]"
+              : "border border-white/12 bg-[#04050c]/55 backdrop-blur-xl"
           }`}
         >
           <div className="flex items-center gap-3">
@@ -125,20 +127,20 @@ export default function Nav({ ready }: { ready: boolean }) {
                   e.preventDefault();
                   go("#home");
                 }}
-                className="block rounded-full bg-white px-4 py-2 shadow-[0_0_35px_rgba(25,70,224,0.45)] transition-transform hover:scale-[1.03]"
+                className="block rounded-full border border-white/15 bg-white/[0.06] px-4 py-2 shadow-[0_0_35px_rgba(25,70,224,0.45)] transition-transform hover:scale-[1.03] hover:border-[#ffd000]/50"
                 aria-label="Sardar IT home"
               >
-                <img src={IMG.logo} alt="Sardar IT" referrerPolicy="no-referrer" className="h-7 w-auto md:h-8" />
+                <img src={IMG.logoWhite} alt="Sardar IT" referrerPolicy="no-referrer" className="h-7 w-auto md:h-8" />
               </a>
             </Magnetic>
 
             {bdTime && (
-              <div className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] font-medium text-white/70 xl:flex">
+              <div className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] font-medium text-white/75 xl:flex">
                 <span className="relative flex h-2 w-2">
                   <span className="pulse-ring absolute inset-0 rounded-full bg-emerald-400" />
                   <span className="relative h-2 w-2 rounded-full bg-emerald-400" />
                 </span>
-                <span>Dhaka · {bdTime}</span>
+                <span className="font-mono-hud text-[10px]">DHK · {bdTime}</span>
               </div>
             )}
           </div>
@@ -160,12 +162,13 @@ export default function Nav({ ready }: { ready: boolean }) {
                       e.preventDefault();
                       go(l.href);
                     }}
-                    className={`relative block rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
+                    className={`relative flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
                       isAct
-                        ? "bg-white/12 text-[#ffd000] shadow-[inset_0_0_0_1px_rgba(255,208,0,0.35)]"
+                        ? "bg-white/12 text-[#ffd000] shadow-[inset_0_0_0_1px_rgba(255,208,0,0.38)]"
                         : "text-white/80 hover:text-white"
                     }`}
                   >
+                    {isAct && <span className="h-1.5 w-1.5 rounded-full bg-[#ffd000]" />}
                     <ScrambleText text={l.label} />
                   </a>
                 </li>
@@ -174,12 +177,17 @@ export default function Nav({ ready }: { ready: boolean }) {
           </ul>
 
           <div className="flex items-center gap-2">
-            <a
-              href={`tel:${CONTACT.phone}`}
-              className="hidden px-3 text-sm font-medium text-white/70 transition hover:text-[#ffd000] 2xl:block"
+            <button
+              type="button"
+              onClick={onOpenCmd}
+              data-cursor="SEARCH"
+              aria-label="Open command palette"
+              className="hidden items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-3.5 py-2 text-xs font-medium text-white/75 transition hover:border-[#ffd000]/60 hover:text-white md:flex"
             >
-              {CONTACT.phone}
-            </a>
+              <span>Quick Jump</span>
+              <kbd className="font-mono-hud rounded bg-white/10 px-1.5 py-0.5 text-[10px] text-[#ffd000]">⌘K</kbd>
+            </button>
+
             <div className="hidden sm:block">
               <Magnetic strength={0.28}>
                 <Button href="#contact" className="!px-6 !py-3">
@@ -187,6 +195,7 @@ export default function Nav({ ready }: { ready: boolean }) {
                 </Button>
               </Magnetic>
             </div>
+
             <button
               type="button"
               onClick={() => setOpen((o) => !o)}
@@ -219,7 +228,7 @@ export default function Nav({ ready }: { ready: boolean }) {
                 }}
                 className="font-display inline-flex items-baseline gap-4 text-5xl font-extrabold text-white transition hover:text-[#ffd000]"
               >
-                <span className="text-sm font-semibold text-[#ffd000]">0{i + 1}</span>
+                <span className="font-mono-hud text-sm font-semibold text-[#ffd000]">0{i + 1}</span>
                 {l.label}
               </a>
             </li>

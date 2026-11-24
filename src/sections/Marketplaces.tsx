@@ -54,8 +54,8 @@ export default function Marketplaces() {
 
         {/* Central Sardar IT Core Node + Animated SVG Laser Circuits */}
         <div className="relative mt-14 hidden flex-col items-center lg:flex">
-          <div className="relative z-10 flex items-center gap-3 rounded-full bg-white px-6 py-3 shadow-[0_0_60px_rgba(25,70,224,0.65)]">
-            <img src={IMG.logo} alt="Sardar IT Core" referrerPolicy="no-referrer" className="h-7 w-auto" />
+          <div className="glass-bright relative z-10 flex items-center gap-3 rounded-full border-[#ffd000]/35 px-7 py-3.5 shadow-[0_0_70px_rgba(25,70,224,0.75)]">
+            <img src={IMG.logoWhite} alt="Sardar IT Core" referrerPolicy="no-referrer" className="h-8 w-auto" />
           </div>
 
           <svg viewBox="0 0 1000 110" className="h-24 w-full max-w-5xl overflow-visible" fill="none" aria-hidden="true">

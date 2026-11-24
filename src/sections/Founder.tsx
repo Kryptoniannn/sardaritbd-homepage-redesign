@@ -14,7 +14,6 @@ const JOURNEY = [
 export default function Founder() {
   const ceo = TEAM[0];
   const secRef = useRef<HTMLElement>(null);
-  const sigRef = useRef<SVGPathElement>(null);
 
   useEffect(() => {
     const sec = secRef.current;
@@ -24,12 +23,12 @@ export default function Founder() {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ".fnd-pill",
-        { y: 40, opacity: 0 },
+        { y: 36, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 0.9,
-          stagger: 0.1,
+          duration: 0.85,
+          stagger: 0.09,
           ease: "expo.out",
           scrollTrigger: {
             trigger: ".fnd-pills",
@@ -38,23 +37,6 @@ export default function Founder() {
           },
         }
       );
-
-      if (sigRef.current) {
-        gsap.fromTo(
-          sigRef.current,
-          { strokeDasharray: 280, strokeDashoffset: 280 },
-          {
-            strokeDashoffset: 0,
-            duration: 1.5,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: sigRef.current,
-              start: "top 90%",
-              once: true,
-            },
-          }
-        );
-      }
     }, sec);
 
     return () => ctx.revert();
@@ -67,11 +49,7 @@ export default function Founder() {
       <div className="relative mx-auto grid max-w-7xl items-center gap-16 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-24">
         {/* Architectural Portrait Stage */}
         <div className="relative mx-auto w-full max-w-lg">
-          <div className="pointer-events-none absolute -inset-6 rounded-[3rem] bg-gradient-to-br from-[#1946e0] to-[#ffd000] opacity-30 blur-3xl" />
-
-          {/* Architectural corner brackets */}
-          <span className="pointer-events-none absolute -left-3 -top-3 z-20 h-8 w-8 border-l-2 border-t-2 border-[#ffd000]" />
-          <span className="pointer-events-none absolute -bottom-3 -right-3 z-20 h-8 w-8 border-b-2 border-r-2 border-[#ffd000]" />
+          <div className="pointer-events-none absolute -inset-6 rounded-[3rem] bg-gradient-to-br from-[#1946e0] to-[#ffd000] opacity-25 blur-3xl" />
 
           <ParallaxImg
             src={ceo.img}
@@ -81,15 +59,17 @@ export default function Founder() {
             speed={7}
           />
 
-          <div className="glass-bright absolute -bottom-6 right-2 z-20 rounded-2xl px-6 py-4 shadow-2xl md:-right-8">
+          <div className="absolute -bottom-6 right-2 z-20 rounded-2xl border border-white/20 bg-[#060919]/90 px-6 py-4 shadow-2xl backdrop-blur-xl md:-right-6">
             <p className="font-display text-4xl font-extrabold">
               <Counter to={150} suffix="+" />
             </p>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-white/70">Entrepreneurs &amp; Members Trained</p>
+            <p className="font-mono-hud mt-0.5 text-[10px] uppercase tracking-[0.2em] text-white/75">
+              Entrepreneurs &amp; Members Trained
+            </p>
           </div>
 
-          <div className="absolute -left-6 -top-6 z-20 hidden h-24 w-24 rounded-full bg-white p-4 shadow-xl md:block">
-            <img src={IMG.shape} alt="" referrerPolicy="no-referrer" className="spin-slow h-full w-full object-contain" />
+          <div className="glass-bright absolute -left-5 -top-5 z-20 hidden h-20 w-20 rounded-full p-3.5 shadow-xl md:block">
+            <img src={IMG.shape} alt="" referrerPolicy="no-referrer" className="spin-slow h-full w-full object-contain brightness-125" />
           </div>
         </div>
 
@@ -97,7 +77,7 @@ export default function Founder() {
         <div>
           <SectionTag className="mb-7">The Visionary</SectionTag>
           <h2 className="font-display text-4xl font-extrabold leading-[1.04] tracking-tight sm:text-6xl">
-            <SplitWords text="Meet Sardar IT [Genius]" />
+            <SplitWords text="Meet Sardar IT [Genius]" highlightClassName="font-serif-ed italic font-normal text-[1.12em]" />
           </h2>
 
           <Reveal delay={0.1}>
@@ -115,8 +95,10 @@ export default function Founder() {
           <div className="fnd-pills mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
             {JOURNEY.map((j) => (
               <div key={j.n} onMouseMove={spotMove} className="fnd-pill spot rounded-2xl p-4">
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#ffd000]">{j.k}</span>
-                <p className="font-display mt-1 text-sm font-extrabold text-white">{j.v}</p>
+                <span className="font-mono-hud text-[10px] font-bold uppercase tracking-[0.2em] text-[#ffd000]">
+                  {j.k}
+                </span>
+                <p className="font-display mt-1.5 text-sm font-extrabold text-white">{j.v}</p>
               </div>
             ))}
           </div>
@@ -133,15 +115,9 @@ export default function Founder() {
                 </div>
               </div>
 
-              <svg viewBox="0 0 180 42" className="h-10 w-36 text-[#ffd000]/80" fill="none" aria-hidden="true">
-                <path
-                  ref={sigRef}
-                  d="M6 32 C 28 6, 42 36, 62 18 C 78 4, 92 34, 118 14 C 136 2, 150 28, 174 16"
-                  stroke="currentColor"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <div className="glass rounded-full px-4 py-2 font-mono-hud text-[10px] uppercase tracking-[0.22em] text-white/70">
+                Dhaka, BD · Est. 2021
+              </div>
             </div>
           </Reveal>
         </div>

@@ -124,9 +124,10 @@ export default function Stats() {
                     <div className="font-display text-6xl font-extrabold leading-none tracking-tight md:text-7xl">
                       <Odometer value={s.to} dec={s.dec} suffix={s.suffix} />
                     </div>
-                    <div className="mt-6 flex items-center gap-3">
-                      <span className="h-[2px] w-10 bg-[#ffd000] transition-all duration-500 group-hover:w-20" />
-                      <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/70">{s.label}</p>
+                    <div className="mt-6 border-t border-white/10 pt-4 transition-colors duration-500 group-hover:border-[#ffd000]/45">
+                      <p className="font-mono-hud text-[11px] font-semibold uppercase tracking-[0.22em] text-white/70">
+                        {s.label}
+                      </p>
                     </div>
                   </div>
                 </div>

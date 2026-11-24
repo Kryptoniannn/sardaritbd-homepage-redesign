@@ -81,7 +81,7 @@ export default function Capabilities() {
           <div className="max-w-2xl">
             <SectionTag className="mb-7">Capability Index</SectionTag>
             <h2 className="font-display text-4xl font-extrabold leading-[1.04] tracking-tight sm:text-6xl">
-              <SplitWords text="Everything we build, [end to end]" />
+              <SplitWords text="Everything we build, [end to end]" highlightClassName="font-serif-ed italic font-normal" />
             </h2>
           </div>
           <p className="max-w-sm text-sm leading-relaxed text-white/60 md:text-base">

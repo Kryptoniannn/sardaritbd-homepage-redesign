@@ -11,10 +11,10 @@ export function Strip() {
         <VelocityMarquee items={MARQUEE} base={2} outline />
       </div>
       <div className="relative">
-        <div className="-mx-4 -rotate-[2.2deg] bg-[#1946e0] py-4 text-white shadow-[0_0_90px_rgba(25,70,224,0.6)]">
+        <div className="-mx-4 -rotate-[1.8deg] border-y border-white/15 bg-gradient-to-r from-[#0e2478] via-[#1946e0] to-[#0e2478] py-4 text-white shadow-[0_0_90px_rgba(25,70,224,0.55)]">
           <VelocityMarquee items={MARQUEE.map((m) => `${m} ➺`)} base={4.2} />
         </div>
-        <div className=" -mx-4 mt-[-1.2rem] rotate-[1.8deg] bg-[#ffd000] py-4 text-[#04050c] shadow-[0_18px_60px_rgba(0,0,0,0.55)]">
+        <div className="-mx-4 mt-[-1rem] rotate-[1.5deg] border-y border-[#ffd000]/35 bg-[#080c1d]/95 py-4 text-[#ffd000] backdrop-blur-xl shadow-[0_18px_60px_rgba(0,0,0,0.65)]">
           <VelocityMarquee items={[...MARQUEE].reverse().map((m) => `${m} ➺`)} base={-4.2} />
         </div>
       </div>
@@ -86,8 +86,8 @@ export default function About() {
             </h2>
           </div>
           <Reveal className="hidden md:block">
-            <div className="relative flex h-28 w-28 items-center justify-center rounded-full bg-white p-5 shadow-[0_0_60px_rgba(255,208,0,0.4)]">
-              <img src={IMG.shape} alt="" referrerPolicy="no-referrer" className="spin-slow h-full w-full object-contain" />
+            <div className="glass-bright relative flex h-24 w-24 items-center justify-center rounded-full p-5 shadow-[0_0_55px_rgba(61,107,255,0.35)]">
+              <img src={IMG.shape} alt="" referrerPolicy="no-referrer" className="spin-slow h-full w-full object-contain brightness-125" />
             </div>
           </Reveal>
         </div>

@@ -3,6 +3,7 @@ import Lenis from "lenis";
 import { gsap, ScrollTrigger, safeRefresh } from "./gsapSetup";
 import ShaderBg from "./ShaderBg";
 import ChapterRail from "./ChapterRail";
+import CommandPalette from "./CommandPalette";
 import { CHAPTERS, chapterById, shaderAccent } from "./theme";
 import { Cursor, Preloader, ScrollProgress, lenisRef } from "./ui";
 import Nav from "./sections/Nav";
@@ -25,6 +26,19 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [ready, setReady] = useState(false);
   const [chapter, setChapter] = useState("intro");
+  const [cmdOpen, setCmdOpen] = useState(false);
+
+  /* Global Cmd+K / Ctrl+K shortcut for Command Palette */
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setCmdOpen((o) => !o);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   /* Smooth scroll engine, driven by the single GSAP ticker */
   useEffect(() => {
@@ -135,7 +149,8 @@ export default function App() {
       <Cursor />
       <ScrollProgress />
       <ChapterRail chapter={chapter} />
-      <Nav ready={ready} />
+      <CommandPalette open={cmdOpen} onClose={() => setCmdOpen(false)} />
+      <Nav ready={ready} onOpenCmd={() => setCmdOpen(true)} />
 
       <main className="relative z-10">
         <div data-chapter="intro">
@@ -143,20 +158,28 @@ export default function App() {
           <Strip />
         </div>
 
+        <div className="hairline-div mx-auto max-w-7xl" />
+
         <div data-chapter="studio">
           <About />
           <MaskZoom />
         </div>
+
+        <div className="hairline-div mx-auto max-w-7xl" />
 
         <div data-chapter="services">
           <Capabilities />
           <Services />
         </div>
 
+        <div className="hairline-div mx-auto max-w-7xl" />
+
         <div data-chapter="process">
           <Process />
           <Stats />
         </div>
+
+        <div className="hairline-div mx-auto max-w-7xl" />
 
         <div data-chapter="works">
           <Learning />
@@ -164,11 +187,15 @@ export default function App() {
           <Marketplaces />
         </div>
 
+        <div className="hairline-div mx-auto max-w-7xl" />
+
         <div data-chapter="people">
           <Founder />
           <Team />
           <WhyUs />
         </div>
+
+        <div className="hairline-div mx-auto max-w-7xl" />
 
         <div data-chapter="contact">
           <ContactSection />

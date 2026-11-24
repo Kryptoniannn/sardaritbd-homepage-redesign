@@ -73,7 +73,7 @@ export default function Process() {
           )
           .to(
             imgs[i - 1],
-            { scale: 0.9, filter: "brightness(0.45)", duration: 1, ease: "power2.inOut" },
+            { scale: 0.92, opacity: 0.4, duration: 1, ease: "power2.inOut" },
             pos
           );
       }

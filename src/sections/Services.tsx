@@ -119,8 +119,7 @@ export default function Services() {
                   </div>
 
                   {/* Bottom Content */}
-                  <div style={{ transform: "translateZ(32px)" }} className="relative z-10">
-                    <div className="mb-3 h-px w-10 bg-[#ffd000]/60 transition-all duration-500 group-hover:w-full group-hover:bg-[#ffd000]" />
+                  <div style={{ transform: "translateZ(32px)" }} className="relative z-10 border-t border-white/10 pt-5 transition-colors duration-500 group-hover:border-[#ffd000]/50">
                     <h3 className="font-display text-2xl font-extrabold leading-tight text-white">
                       <ScrambleText text={s.title} />
                     </h3>
